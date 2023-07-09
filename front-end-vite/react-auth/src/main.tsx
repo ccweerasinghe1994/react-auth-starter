@@ -1,33 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { UserInfoPage } from './pages/UserInfoPage.tsx';
-import type { RouteObject, Router } from 'react-router-dom';
-import LoginPage from './pages/LoginPage.tsx';
-import SignUpPage from './pages/SignupPage.tsx';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-const routeObject: RouteObject[] = [
-	{
-		path: '/',
-		element: <UserInfoPage />
-	},
-	{
-		path: '/login',
-		element: <LoginPage />
-	},
-	{
-		path: '/signup',
-		element: <SignUpPage />
-	}
-];
-
-const router = createBrowserRouter(routeObject);
+import App from './App.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<div className="page-container">
-			<RouterProvider router={router} />
+			<BrowserRouter>
+				<Routes>
+					<Route path="/*" element={<App />} />
+				</Routes>
+			</BrowserRouter>
 		</div>
 	</React.StrictMode>
 );
