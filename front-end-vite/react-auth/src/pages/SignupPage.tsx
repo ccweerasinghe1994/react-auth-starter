@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage: React.FC = () => {
+const SignUpPage: React.FC = () => {
 	const [emailValue, setEmailValue] = useState<string>('');
 	const [passwordValue, setPasswordValue] = useState<string>('');
 	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>('');
+
 	const navigate = useNavigate();
 
-	const onLoginClicked = () => {
-		alert(`log in not implemented yet`);
+	const onSignUpClicked = () => {
+		alert(`sign up not implemented yet`);
 	};
 	return (
 		<div className="content-container">
-			<h1>Login Page</h1>
+			<h1>Sign Up Page</h1>
 			{errorMessage && <div className="fail">{errorMessage}</div>}
 			<input
 				value={emailValue}
@@ -21,22 +23,33 @@ const LoginPage: React.FC = () => {
 				placeholder="someOne@gmail.com"
 			/>
 			<input
-				disabled={!emailValue || !passwordValue}
 				value={passwordValue}
 				onChange={(e) => setPasswordValue(e?.target?.value)}
 				type="password"
 				placeholder="password"
 			/>
-			<hr />
-			<button onClick={onLoginClicked}>Log In</button>
-			<button onClick={() => navigate('/forget-password')}>
-				forgot your password
+			<input
+				value={confirmPasswordValue}
+				onChange={(e) => setConfirmPasswordValue(e?.target?.value)}
+				type="password"
+				placeholder="confirm password"
+			/>
+            <hr />
+			<button
+				disabled={
+					!emailValue ||
+					!passwordValue ||
+					passwordValue !== confirmPasswordValue
+				}
+				onClick={onSignUpClicked}
+			>
+				Sign Up
 			</button>
-			<button onClick={() => navigate('/signup')}>
-				don't have and account? Sign Up
+			<button onClick={() => navigate('/login')}>
+				Already have and account? log in
 			</button>
 		</div>
 	);
 };
 
-export default LoginPage;
+export default SignUpPage;

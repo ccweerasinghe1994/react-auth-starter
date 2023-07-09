@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { UserInfoPage } from './pages/UserInfoPage.tsx';
 import type { RouteObject, Router } from 'react-router-dom';
 import LoginPage from './pages/LoginPage.tsx';
+import SignUpPage from './pages/SignupPage.tsx';
 
 const routeObject: RouteObject[] = [
 	{
@@ -14,6 +15,10 @@ const routeObject: RouteObject[] = [
 	{
 		path: '/login',
 		element: <LoginPage />
+	},
+	{
+		path: '/signup',
+		element: <SignUpPage />
 	}
 ];
 
