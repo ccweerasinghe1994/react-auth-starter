@@ -12,7 +12,7 @@ export const signUpRoute = {
 
         if (user) {
             //  this is a conflict error
-            res.sendStatus(409);
+            return res.sendStatus(409);
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
@@ -37,7 +37,7 @@ export const signUpRoute = {
                 res.sendStatus(500);
             }
 
-            res.status(200).json({ token });
+            return res.status(200).json({ token });
         });
     },
 };
