@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useToken } from '../hooks/useToken';
+import axios from 'axios';
+import type { AxiosResponse } from 'axios';
 const SignUpPage: React.FC = () => {
 	const [emailValue, setEmailValue] = useState<string>('');
 	const [passwordValue, setPasswordValue] = useState<string>('');
@@ -9,9 +11,22 @@ const SignUpPage: React.FC = () => {
 
 	const navigate = useNavigate();
 
-	const onSignUpClicked = () => {
-		alert(`sign up not implemented yet`);
+	const { setToken } = useToken();
+
+	const onSignUpClicked = async () => {
+		const response: AxiosResponse<{ token: string }> = await axios.post(
+			'http://localhost:8080/api/signup',
+			{
+				email: emailValue,
+				password: passwordValue
+			}
+		);
+
+		const { token } = response.data;
+		setToken(token);
+		navigate('/');
 	};
+
 	return (
 		<div className="content-container">
 			<h1>Sign Up Page</h1>
@@ -34,7 +49,7 @@ const SignUpPage: React.FC = () => {
 				type="password"
 				placeholder="confirm password"
 			/>
-            <hr />
+			<hr />
 			<button
 				disabled={
 					!emailValue ||
