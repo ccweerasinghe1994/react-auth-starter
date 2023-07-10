@@ -1,14 +1,27 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
+import type { AxiosResponse } from 'axios';
+import { useToken } from '../hooks/useToken';
 const LoginPage: React.FC = () => {
 	const [emailValue, setEmailValue] = useState<string>('');
 	const [passwordValue, setPasswordValue] = useState<string>('');
 	const [errorMessage, setErrorMessage] = useState<string>('');
 	const navigate = useNavigate();
+	const { setToken } = useToken();
 
-	const onLoginClicked = () => {
-		alert(`log in not implemented yet`);
+	const onLoginClicked = async () => {
+		const response: AxiosResponse<{ token: string }> = await axios.post(
+			'http://localhost:8080/api/login',
+			{
+				email: emailValue,
+				password: passwordValue
+			}
+		);
+		const { token } = response.data;
+
+		setToken(token);
+		navigate('/');
 	};
 	return (
 		<div className="content-container">
@@ -21,7 +34,6 @@ const LoginPage: React.FC = () => {
 				placeholder="someOne@gmail.com"
 			/>
 			<input
-				disabled={!emailValue || !passwordValue}
 				value={passwordValue}
 				onChange={(e) => setPasswordValue(e?.target?.value)}
 				type="password"
