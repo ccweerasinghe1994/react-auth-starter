@@ -14,6 +14,7 @@ app.use(express.json());
 // enable cors
 app.use(cors({
     origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }))
 // Add all the routes to our Express server
 // exported from routes/index.js
