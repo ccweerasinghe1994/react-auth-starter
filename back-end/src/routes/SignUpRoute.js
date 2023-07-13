@@ -1,6 +1,8 @@
 import { getDbConnection } from "../db";
 import bcrypt from 'bcrypt';
 import { sign } from "jsonwebtoken";
+import { v4 as uuid } from 'uuid';
+import { sendEmail } from "../util/SendEmail";
 export const signUpRoute = {
     path: '/api/signup',
     method: 'post',
@@ -16,7 +18,7 @@ export const signUpRoute = {
         }
 
         const passwordHash = await bcrypt.hash(password, 10);
-
+        const verificationString = uuid();
         const startingInfo = {
             hairColor: '',
             favoriteFood: '',
@@ -28,7 +30,18 @@ export const signUpRoute = {
             passwordHash,
             info: startingInfo,
             isVerified: false,
+            verificationString,
         });
+        try {
+            await sendEmail(email, 'Please verify your email address', `
+        Thanks for signing up for our app! Please click the link below to verify your email address:
+        http://localhost:5173/veryfy-email/${verificationString}
+        `);
+
+        } catch (error) {
+            console.log(error);
+            res.sendStatus(500);
+        }
 
         const { insertedId } = result;
 

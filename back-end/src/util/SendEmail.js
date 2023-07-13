@@ -2,7 +2,7 @@
 import nodemailer from 'nodemailer';
 
 
-export const sendEmail = async () => {
+export const sendEmail = async (to, subject, text) => {
     const transport = nodemailer.createTransport({
         service: 'gmail',
         host: "smtp.gmail.com",
@@ -17,10 +17,9 @@ export const sendEmail = async () => {
 
     const info = await transport.sendMail({
         from: `"chamara" <${process.env.EMAIL}>`,
-        to: 'ccweerasinghe1995@gmail.com',
-        subject: 'Hello from react-auth',
-        text: 'Hello world?',
-        html: '<b>Hello world?</b>',
+        to: to,
+        subject: subject,
+        text: text
     });
 
     return info;
